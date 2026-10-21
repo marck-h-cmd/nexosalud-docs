@@ -1,0 +1,49 @@
+﻿=================================================================================
+EVALUACIÓN DE PREVALIDACIÓN NEGATIVA SOBRE ARCHIVO REAL ETL BUYER H3
+Fecha: 2026-10-21 17:35:37
+Archivo Real Invocado: C:\Users\Daniel\Downloads\nexosalud-docs\Entregables\15. ETL_Fact_CaptacionBuyer_h3.sql
+=================================================================================
+
+---------------------------------------------------------------------------------
+EJECUTANDO ESCENARIO PREVAL-01: Longitud y Precisión Insuficiente en Fact_CaptacionBuyer
+---------------------------------------------------------------------------------
+>> Proceso sqlcmd iniciado [PID: 27476] sobre base Test_NexoSalud_Mart_Preval_P01...
+Resultado PREVAL-01: ExitCode=1, DiagCosto=True, DiagBatch=True, EstructuraOk=True, DatosOk=True, SinObjPost=True, ProcPreexOk=True -> Veredicto: CORRECTO
+
+---------------------------------------------------------------------------------
+EJECUTANDO ESCENARIO PREVAL-02: Capacidad Entera Decimal Insuficiente (DECIMAL(10,9))
+---------------------------------------------------------------------------------
+>> Proceso sqlcmd iniciado [PID: 3308] sobre base Test_NexoSalud_Mart_Preval_P02...
+Resultado PREVAL-02: ExitCode=1, DiagDecimal=True, EstructuraOk=True, DatosOk=True, SinObjPost=True -> Veredicto: CORRECTO
+
+---------------------------------------------------------------------------------
+EJECUTANDO ESCENARIO PREVAL-03: Tabla Auxiliar sin Columna Obligatoria (Log_Ejecucion_ETL sin Mensaje)
+---------------------------------------------------------------------------------
+>> Proceso sqlcmd iniciado [PID: 21952] sobre base Test_NexoSalud_Mart_Preval_P03...
+Resultado PREVAL-03: ExitCode=1, DiagLog=True, EstructuraOk=True, DatosOk=True, SinObjPost=True -> Veredicto: CORRECTO
+
+---------------------------------------------------------------------------------
+EJECUTANDO ESCENARIO PREVAL-04: Unicidad Compuesta y FK Deshabilitada
+---------------------------------------------------------------------------------
+>> Proceso sqlcmd iniciado [PID: 12432] sobre base Test_NexoSalud_Mart_Preval_P04...
+Resultado PREVAL-04: ExitCode=1, DiagUq=True, DiagFk=True, EstructuraOk=True, DatosOk=True, SinObjPost=True -> Veredicto: CORRECTO
+
+=================================================================================
+RESUMEN CONSOLIDADO DE PREVALIDACIÓN NEGATIVA SOBRE ARCHIVO REAL:
+=================================================================================
+PREVAL-01  Prevalidación Negativa: Longitud y Precisión Insuficiente en Fact_CaptacionBuyer CORRECTO
+PREVAL-02  Prevalidación Negativa: Capacidad Entera Decimal Insuficiente (DECIMAL(10,9)) CORRECTO
+PREVAL-03  Prevalidación Negativa: Tabla Auxiliar con Identidad pero Columna Ausente (Log_Ejecucion_ETL sin Mensaje) CORRECTO
+PREVAL-04  Prevalidación Negativa: Unicidad Compuesta y FK Deshabilitada     CORRECTO
+---------------------------------------------------------------------------------
+Total Escenarios Planificados: 4
+Total Escenarios Evaluados   : 4
+Escenarios Correctos         : 4
+Escenarios Fallidos          : 0
+
+>> Procediendo a la limpieza de bases temporales creadas exclusivamente por esta ejecución...
+>> Base temporal [Test_NexoSalud_Mart_Preval_P01] eliminada limpiamente (cierre normal).
+>> Base temporal [Test_NexoSalud_Mart_Preval_P02] eliminada limpiamente (cierre normal).
+>> Base temporal [Test_NexoSalud_Mart_Preval_P03] eliminada limpiamente (cierre normal).
+>> Base temporal [Test_NexoSalud_Mart_Preval_P04] eliminada limpiamente (cierre normal).
+Dictamen de Prevalidación    : TODOS LOS CASOS NEGATIVOS APROBADOS FRENTE AL ARCHIVO REAL
