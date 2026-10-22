@@ -1,0 +1,15 @@
+T01 CUSTOMER carga, grano, C1/C2/C4, futuro, pendiente y rechazos: CORRECTO
+T02 CUSTOMER rerun idempotente: CORRECTO
+T03 TURNED seguimiento, huerfano, identidad y cohorte inmadura: CORRECTO
+T04 TURNED rerun idempotente: CORRECTO
+T05 CUSTOMER cambio de corte temporal: CORRECTO
+T06 TURNED madurez de 90 dias y retorno: CORRECTO
+T07 CUSTOMER cambio de estado y actualizacion in-place: CORRECTO
+T08 C4 actualizable y unicidad: CORRECTO
+T09 CUSTOMER fuente invalidada neutralizada en el hecho: CORRECTO
+T10 TURNED fuente invalidada neutralizada: CORRECTO
+T11 TURNED fuente corregida reactivada: CORRECTO
+T12 auditoria de once cargas: CORRECTO
+RESULTADO: 12/12 CASOS SQL CORRECTOS
+T13 reserva concurrente: una sesion confirma y la otra recibe conflicto; una sola fila activa: CORRECTO
+RESULTADO TOTAL: 13/13 CASOS CORRECTOS
