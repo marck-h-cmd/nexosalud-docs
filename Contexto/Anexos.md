@@ -1793,9 +1793,9 @@ UPDATE dim
 SET dim.EstadoPago = src.EstadoPago, dim.ComprobanteAdjunto = src.ComprobanteAdjunto
 FROM dbo.Dim_Cobro dim
 JOIN (
-    SELECT 1 AS KeyCobro, 'VALIDATED' AS EstadoPago, 'SI' AS ComprobanteAdjunto
-    UNION ALL SELECT 2, 'PENDING', 'NO'
-    UNION ALL SELECT 3, 'REJECTED', 'NO'
+    SELECT 1 AS KeyCobro, 'Validado' AS EstadoPago, 'SI' AS ComprobanteAdjunto
+    UNION ALL SELECT 2, 'Pendiente', 'NO'
+    UNION ALL SELECT 3, 'Rechazado', 'NO'
     UNION ALL SELECT 4, 'Confirmado', 'SI'
     UNION ALL SELECT 5, 'Pendiente', 'NO'
     UNION ALL SELECT 6, 'Fallido', 'NO'
@@ -1804,9 +1804,9 @@ JOIN (
 INSERT INTO dbo.Dim_Cobro (EstadoPago, ComprobanteAdjunto)
 SELECT src.EstadoPago, src.ComprobanteAdjunto
 FROM (
-    SELECT 1 AS KeyCobro, 'VALIDATED' AS EstadoPago, 'SI' AS ComprobanteAdjunto
-    UNION ALL SELECT 2, 'PENDING', 'NO'
-    UNION ALL SELECT 3, 'REJECTED', 'NO'
+    SELECT 1 AS KeyCobro, 'Validado' AS EstadoPago, 'SI' AS ComprobanteAdjunto
+    UNION ALL SELECT 2, 'Pendiente', 'NO'
+    UNION ALL SELECT 3, 'Rechazado', 'NO'
     UNION ALL SELECT 4, 'Confirmado', 'SI'
     UNION ALL SELECT 5, 'Pendiente', 'NO'
     UNION ALL SELECT 6, 'Fallido', 'NO'
@@ -2238,9 +2238,9 @@ UPDATE dim
 SET dim.EstadoPago = src.EstadoPago, dim.ComprobanteAdjunto = src.ComprobanteAdjunto
 FROM [NexoSalud_Mart].dbo.[Dim_Cobro] dim
 JOIN (
-    SELECT 1 AS KeyCobro, 'VALIDATED' AS EstadoPago, 'SI' AS ComprobanteAdjunto
-    UNION ALL SELECT 2, 'PENDING', 'NO'
-    UNION ALL SELECT 3, 'REJECTED', 'NO'
+    SELECT 1 AS KeyCobro, 'Validado' AS EstadoPago, 'SI' AS ComprobanteAdjunto
+    UNION ALL SELECT 2, 'Pendiente', 'NO'
+    UNION ALL SELECT 3, 'Rechazado', 'NO'
     UNION ALL SELECT 4, 'Confirmado', 'SI'
     UNION ALL SELECT 5, 'Pendiente', 'NO'
     UNION ALL SELECT 6, 'Fallido', 'NO'
@@ -2249,9 +2249,9 @@ JOIN (
 INSERT INTO [NexoSalud_Mart].dbo.[Dim_Cobro] (EstadoPago, ComprobanteAdjunto)
 SELECT src.EstadoPago, src.ComprobanteAdjunto
 FROM (
-    SELECT 1 AS KeyCobro, 'VALIDATED' AS EstadoPago, 'SI' AS ComprobanteAdjunto
-    UNION ALL SELECT 2, 'PENDING', 'NO'
-    UNION ALL SELECT 3, 'REJECTED', 'NO'
+    SELECT 1 AS KeyCobro, 'Validado' AS EstadoPago, 'SI' AS ComprobanteAdjunto
+    UNION ALL SELECT 2, 'Pendiente', 'NO'
+    UNION ALL SELECT 3, 'Rechazado', 'NO'
     UNION ALL SELECT 4, 'Confirmado', 'SI'
     UNION ALL SELECT 5, 'Pendiente', 'NO'
     UNION ALL SELECT 6, 'Fallido', 'NO'
@@ -2632,16 +2632,16 @@ BEGIN TRY
         CAST(FORMAT(p.fecha_registro, 'yyyyMMdd') AS INT) AS KeyTiempo,
         ISNULL(dp.KeyPasarela, 0) AS KeyPasarela,
         CASE 
-            WHEN p.estado IN ('Confirmado', 'Validado', 'VALIDATED', 'VALIDADO') THEN 1
-            WHEN p.estado IN ('Pendiente', 'PENDING') THEN 2
-            WHEN p.estado IN ('Fallido', 'Rechazado', 'REJECTED') THEN 3
+            WHEN p.estado IN ('Confirmado', 'Validado', 'Validado', 'VALIDADO') THEN 1
+            WHEN p.estado IN ('Pendiente', 'Pendiente') THEN 2
+            WHEN p.estado IN ('Fallido', 'Rechazado', 'Rechazado') THEN 3
             ELSE 0
         END AS KeyCobro,
         ISNULL(ds.KeySede, 0) AS KeySede,
         ISNULL(dserv.KeyServicio, 0) AS KeyServicio,
         COUNT(p.id_pago) AS PagosRegistrados,
-        SUM(CASE WHEN p.estado IN ('Validado', 'VALIDADO', 'Confirmado', 'VALIDATED') THEN 1 ELSE 0 END) AS PagosValidados,
-        SUM(CASE WHEN p.estado IN ('Rechazado', 'REJECTED', 'Fallido') THEN 1 ELSE 0 END) AS PagosRechazados,
+        SUM(CASE WHEN p.estado IN ('Validado', 'VALIDADO', 'Confirmado', 'Validado') THEN 1 ELSE 0 END) AS PagosValidados,
+        SUM(CASE WHEN p.estado IN ('Rechazado', 'Rechazado', 'Fallido') THEN 1 ELSE 0 END) AS PagosRechazados,
         SUM(p.importe) AS ImporteTotalCobro,
         SUM(CASE 
             WHEN p.fecha_validacion IS NOT NULL AND p.fecha_validacion >= p.fecha_registro 
@@ -2660,9 +2660,9 @@ BEGIN TRY
         CAST(FORMAT(p.fecha_registro, 'yyyyMMdd') AS INT),
         ISNULL(dp.KeyPasarela, 0),
         CASE 
-            WHEN p.estado IN ('Confirmado', 'Validado', 'VALIDATED', 'VALIDADO') THEN 1
-            WHEN p.estado IN ('Pendiente', 'PENDING') THEN 2
-            WHEN p.estado IN ('Fallido', 'Rechazado', 'REJECTED') THEN 3
+            WHEN p.estado IN ('Confirmado', 'Validado', 'Validado', 'VALIDADO') THEN 1
+            WHEN p.estado IN ('Pendiente', 'Pendiente') THEN 2
+            WHEN p.estado IN ('Fallido', 'Rechazado', 'Rechazado') THEN 3
             ELSE 0
         END,
         ISNULL(ds.KeySede, 0),
