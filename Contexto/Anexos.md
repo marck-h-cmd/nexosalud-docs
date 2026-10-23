@@ -1846,6 +1846,7 @@ GO
 El siguiente script corresponde a la implementación vigente de `database/etl_populate_mart_insert.sql`. Implementa la carga incremental, no destructiva e idempotente de las 5 tablas de hechos basada en la preparación de datos en tablas temporales `#Staging_*`, `UPDATE` in-place condicional de métricas modificadas, `INSERT ... WHERE NOT EXISTS` sobre el grano compuesto, reconciliación selectiva de grupos obsoletos con `DELETE ... WHERE NOT EXISTS`, exclusión mutua de concurrencia mediante `sp_getapplock` y auditoría en `dbo.Log_Ejecucion_ETL`.
 
 ```sql
+-
 -- ====================================================================
 -- NEXOSALUD — DATA MART DIMENSIONAL (CLÍNICA LUXEDENT, TRUJILLO)
 -- PROCESO ETL INCREMENTAL BASADO EN UPDATE + INSERT (WHERE NOT EXISTS)
@@ -1864,6 +1865,33 @@ SET QUOTED_IDENTIFIER ON;
 GO
 SET XACT_ABORT ON;
 GO
+
+-- ====================================================================
+-- 0. GARANTIA DE COMPATIBILIDAD DE ESQUEMA EN [NexoSaludDB]
+-- Asegurar columnas clinicas en Atenciones si la tabla fue creada previamente
+-- ====================================================================
+IF COL_LENGTH('[NexoSaludDB].dbo.[Atenciones]', 'fecha_inicio') IS NULL
+    ALTER TABLE [NexoSaludDB].dbo.[Atenciones] ADD [fecha_inicio] DATETIME2 NULL;
+GO
+IF COL_LENGTH('[NexoSaludDB].dbo.[Atenciones]', 'fecha_fin') IS NULL
+    ALTER TABLE [NexoSaludDB].dbo.[Atenciones] ADD [fecha_fin] DATETIME2 NULL;
+GO
+IF COL_LENGTH('[NexoSaludDB].dbo.[Atenciones]', 'motivo_consulta') IS NULL
+    ALTER TABLE [NexoSaludDB].dbo.[Atenciones] ADD [motivo_consulta] VARCHAR(300) NULL;
+GO
+IF COL_LENGTH('[NexoSaludDB].dbo.[Atenciones]', 'antecedentes') IS NULL
+    ALTER TABLE [NexoSaludDB].dbo.[Atenciones] ADD [antecedentes] VARCHAR(500) NULL;
+GO
+IF COL_LENGTH('[NexoSaludDB].dbo.[Atenciones]', 'alergias') IS NULL
+    ALTER TABLE [NexoSaludDB].dbo.[Atenciones] ADD [alergias] VARCHAR(300) NULL;
+GO
+IF COL_LENGTH('[NexoSaludDB].dbo.[Atenciones]', 'evaluacion') IS NULL
+    ALTER TABLE [NexoSaludDB].dbo.[Atenciones] ADD [evaluacion] VARCHAR(500) NULL;
+GO
+IF COL_LENGTH('[NexoSaludDB].dbo.[Atenciones]', 'procedimiento') IS NULL
+    ALTER TABLE [NexoSaludDB].dbo.[Atenciones] ADD [procedimiento] VARCHAR(500) NULL;
+GO
+
 
 -- ====================================================================
 -- 1. INFRAESTRUCTURA DE AUDITORÍA Y CONTROL DE EJECUCIÓN
@@ -2991,7 +3019,7 @@ BEGIN CATCH
     THROW @ErrorSeverity, @ErrorMessage, @ErrorState;
 END CATCH;
 GO
-```
+`
 
 # Anexo G
 
