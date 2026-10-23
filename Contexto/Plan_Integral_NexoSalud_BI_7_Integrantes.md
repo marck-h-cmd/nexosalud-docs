@@ -236,7 +236,7 @@ INSERT INTO dbo.Fact_GestionPayer
   (id_pago_origen, KeyTiempo, KeyCobro, PagosRegistrados, ImporteTotalCobro)
 SELECT p.id_pago, CONVERT(int,CONVERT(char(8),p.fecha_registro,112)),
        dc.KeyCobro, 1,
-       CASE WHEN p.estado='VALIDATED' THEN p.importe ELSE 0 END
+       CASE WHEN UPPER(p.estado) IN ('VALIDADO', 'VALIDATED') THEN p.importe ELSE 0 END
 FROM NexoSaludDB.dbo.Pagos p
 JOIN dbo.Dim_Cobro dc ON dc.EstadoPago=p.estado
 WHERE NOT EXISTS (

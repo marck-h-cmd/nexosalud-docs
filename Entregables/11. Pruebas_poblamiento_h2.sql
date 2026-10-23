@@ -60,7 +60,7 @@ SELECT
     COUNT(*) AS TotalPagosValidados,
     SUM(importe) AS MontoTotalRecaudado
 FROM NexoSaludDB.dbo.Pagos
-WHERE UPPER(estado) = 'VALIDATED'
+WHERE UPPER(estado) IN ('VALIDADO', 'VALIDATED')
 UNION ALL
 SELECT 
     'NexoSalud_Mart (Data Mart)',

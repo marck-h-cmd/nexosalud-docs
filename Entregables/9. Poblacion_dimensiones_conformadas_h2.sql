@@ -413,10 +413,10 @@ SELECT
     COALESCE(dpag.KeyPagador, (SELECT MIN(KeyPagador) FROM [NexoSalud_Mart].[dbo].Dim_Pagador)),
     COALESCE(dc.KeyCobro, (SELECT MIN(KeyCobro) FROM [NexoSalud_Mart].[dbo].Dim_Cobro)),
     PagosRegistrados = COUNT(p.id_pago),
-    PagosValidados   = SUM(CASE WHEN UPPER(p.estado) = 'VALIDATED' THEN 1 ELSE 0 END),
-    PagosRechazados  = SUM(CASE WHEN UPPER(p.estado) = 'REJECTED' THEN 1 ELSE 0 END),
-    ConversionesACustomer = SUM(CASE WHEN UPPER(p.estado) = 'VALIDATED' THEN 1 ELSE 0 END),
-    ImporteTotalCobro = SUM(CASE WHEN UPPER(p.estado) = 'VALIDATED' THEN p.importe ELSE 0.00 END),
+    PagosValidados   = SUM(CASE WHEN UPPER(p.estado) IN ('VALIDADO', 'VALIDATED') THEN 1 ELSE 0 END),
+    PagosRechazados  = SUM(CASE WHEN UPPER(p.estado) IN ('RECHAZADO', 'REJECTED') THEN 1 ELSE 0 END),
+    ConversionesACustomer = SUM(CASE WHEN UPPER(p.estado) IN ('VALIDADO', 'VALIDATED') THEN 1 ELSE 0 END),
+    ImporteTotalCobro = SUM(CASE WHEN UPPER(p.estado) IN ('VALIDADO', 'VALIDATED') THEN p.importe ELSE 0.00 END),
     CostoTotalTransacciones = SUM(p.importe * 0.03),
     TiempoTotalValidacionMin = SUM(ISNULL(DATEDIFF(mi, p.fecha_registro, p.fecha_validacion), 0))
 FROM NexoSaludDB.dbo.Pagos p
